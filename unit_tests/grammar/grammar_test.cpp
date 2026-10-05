@@ -13,6 +13,7 @@
 #include <unit_tests/grammar/rule_set/vertex_property_test.cpp>
 #include <unit_tests/grammar/rule_set/line_property_test.cpp>
 #include <unit_tests/grammar/rule_set/rectangle_property_test.cpp>
+#include <unit_tests/grammar/rule_set/triangle_property_test.cpp>
 #include <unit_tests/grammar/rule_set/cuboid_property_test.cpp>
 
 #include <unit_tests/grammar/rule_set/point_property_test.cpp>

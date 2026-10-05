@@ -22,10 +22,13 @@ void grammar::mReadSDSettings(const std::string& fileName)
 		throw std::invalid_argument(errorMessage.str());
 	}
 
+	// Clear variables declared in the considered grammar entity
 	mSDWallProperties.clear();
 	mSDFloorProperties.clear();
 	mLoadPanel = structural_design::component::structure();
 	mLoads.clear();
+	
+	// Initial variables for reading the file information. When read, this information will be transferred to the considered grammar entity later in this function
 	std::map<std::pair<std::string,std::string>,std::pair<std::string,std::string> > wallStructureIDs;
 	std::map<std::pair<std::string,std::string>,std::pair<std::string,std::string> > floorStructureIDs;
 	std::map<std::string,std::pair<std::string,std::string> > spaceStructureIDs;
@@ -39,6 +42,7 @@ void grammar::mReadSDSettings(const std::string& fileName)
 	typedef boost::tokenizer< boost::char_separator<char> > t_tokenizer; // settings for the boost::tokenizer
 	char type_ID; // holds information about what type of information is described by the line currently read
 
+	// Read input file inserted in function by 'const std::string& fileName'
 	while(!input.eof())
 	{
 		getline(input, line); // get the next line from the file
@@ -185,6 +189,7 @@ void grammar::mReadSDSettings(const std::string& fileName)
 		}
 	} // end of file
 
+	//Assign wallstructureIDs in the considered grammar entity
 	for (const auto& i : wallStructureIDs)
 	{
 		bool foundMatch = false;

@@ -9,11 +9,15 @@ namespace bso { namespace utilities { namespace geometry {
 	
 	vertex::vertex() : Eigen::Vector3d()
 	{
+		//std::cout << "vertex::vertex() : Eigen::Vector3d() is working: " << std::endl; // Tessa Defined
+		//std::cout << " " << std::endl;  // Tessa Defined
 		this->setZero();
 	}
 	
+
 	vertex::vertex(const std::initializer_list<double>&& l)
 	{
+		//std::cout << "vertex::vertex(const std::initializer_list<double>&& l) is working: " << std::endl; // Tessa Defined
 		if (l.size() != 3)
 		{
 			std::stringstream errorMessage;
@@ -29,7 +33,7 @@ namespace bso { namespace utilities { namespace geometry {
 	template<class T>
 	vertex::vertex(const Eigen::MatrixBase<T>& rhs) : Eigen::Vector3d(rhs)
 	{
-		
+		//std::cout << "vertex::vertex(const std::initializer_list<double>&& l) is working: " << std::endl; // Tessa Defined
 	}
 	
 	auto vertex::begin() 
@@ -60,6 +64,9 @@ namespace bso { namespace utilities { namespace geometry {
 	
 	bool vertex::isSameAs(const vertex& rhs, const double& tol /*= 1e-9*/) const
 	{
+		//std::cout << "tol used during isSameAs check is: " << tol << std::endl;
+		//std::cout << "The calculation result in: " << ((*this)-rhs);
+		//std::cout << " " << std::endl;
 		return ((*this)-rhs).isZero(tol);
 	}
 	

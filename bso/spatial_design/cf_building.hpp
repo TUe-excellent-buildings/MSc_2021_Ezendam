@@ -12,7 +12,10 @@ namespace bso { namespace spatial_design { namespace conformal {
 	class cf_vertex;
 	class cf_line;
 	class cf_rectangle;
+	class cf_triangle;
 	class cf_cuboid;
+	class cf_tetrahedron;
+	class cf_triPrism;
 	class cf_building_entity;
 	class cf_point;
 	class cf_edge;
@@ -31,7 +34,10 @@ namespace bso { namespace spatial_design { namespace conformal {
 #include <bso/spatial_design/conformal/cf_vertex.hpp>
 #include <bso/spatial_design/conformal/cf_line.hpp>
 #include <bso/spatial_design/conformal/cf_rectangle.hpp>
+#include <bso/spatial_design/conformal/cf_triangle.hpp>
 #include <bso/spatial_design/conformal/cf_cuboid.hpp>
+#include <bso/spatial_design/conformal/cf_tetrahedron.hpp>
+#include <bso/spatial_design/conformal/cf_triprism.hpp>
 #include <bso/spatial_design/conformal/cf_building_entity.hpp>
 #include <bso/spatial_design/conformal/cf_point.hpp>
 #include <bso/spatial_design/conformal/cf_edge.hpp>
@@ -47,7 +53,10 @@ namespace bso { namespace spatial_design { namespace conformal {
 #include <bso/spatial_design/conformal/cf_vertex.cpp>
 #include <bso/spatial_design/conformal/cf_line.cpp>
 #include <bso/spatial_design/conformal/cf_rectangle.cpp>
+#include <bso/spatial_design/conformal/cf_triangle.cpp>
 #include <bso/spatial_design/conformal/cf_cuboid.cpp>
+#include <bso/spatial_design/conformal/cf_tetrahedron.cpp>
+#include <bso/spatial_design/conformal/cf_triprism.cpp>
 #include <bso/spatial_design/conformal/cf_building_entity.cpp>
 #include <bso/spatial_design/conformal/cf_point.cpp>
 #include <bso/spatial_design/conformal/cf_edge.cpp>
@@ -55,7 +64,9 @@ namespace bso { namespace spatial_design { namespace conformal {
 #include <bso/spatial_design/conformal/cf_space.cpp>
 
 namespace bso { namespace spatial_design {
-	typedef conformal::cf_building_model cf_building;
+	typedef conformal::cf_building_model cf_building; 
+// cf_building now refers to the namespaces Conformal::cf_building_model, 
+// so look in the conformal directory to the file "cf_building_model" for the function used.
 } // namespace spatial_design
 } // namespace bso
 	

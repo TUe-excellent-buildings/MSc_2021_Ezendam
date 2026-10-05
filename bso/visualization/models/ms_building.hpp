@@ -43,6 +43,7 @@ public:
 MS_Model::MS_Model(const spatial_design::ms_building& ms,
 						const std::string& type /*= "spaces"*/, const std::string& title /*= "ms_building"*/)
 {
+	
 	mTitle = title;
 	pprops.ambient = rgba(0.1f, 0.5f, 0.1f, 0.3f);
 	pprops.diffuse = rgba(0.2f, 1.0f, 0.2f, 0.3f);
@@ -51,19 +52,34 @@ MS_Model::MS_Model(const spatial_design::ms_building& ms,
 	pprops.shininess = 60.0f;
 	pprops.translucent = true;
 	pprops.twosided = true;
-
-	ppropsSurfaceType.ambient = rgba(1.0f, 1.0f, 0.04f, 0.4f);
-	ppropsSurfaceType.diffuse = rgba(1.0f, 1.0f, 0.04f, 0.4f);
-	ppropsSurfaceType.specular = rgba(0.04f, 0.04f, 0.04f, 1.0f);
-	ppropsSurfaceType.emission = rgba(0.04f, 0.04f, 0.04f, 1.0f);
-	ppropsSurfaceType.shininess = 60.0;
-	ppropsSurfaceType.translucent = true;
-	ppropsSurfaceType.twosided = true;
 	
+	
+	bool standart = true;
+
+	if(standart == true)
+	{
+		ppropsSurfaceType.ambient = rgba(1.0f, 1.0f, 0.04f, 0.4f);
+		ppropsSurfaceType.diffuse = rgba(1.0f, 1.0f, 0.04f, 0.4f);
+		ppropsSurfaceType.specular = rgba(0.04f, 0.04f, 0.04f, 1.0f);
+		ppropsSurfaceType.emission = rgba(0.04f, 0.04f, 0.04f, 1.0f);
+		ppropsSurfaceType.shininess = 60.0;
+		ppropsSurfaceType.translucent = true;
+		ppropsSurfaceType.twosided = true;
+	}
+	else
+	{
+		ppropsSurfaceType.ambient = rgba(0.7f, 0.7f, 0.7f, 0.3f);
+		ppropsSurfaceType.diffuse = rgba(0.2f, 0.2f, 0.2f, 0.3f);
+		ppropsSurfaceType.specular = rgba(0.2f, 0.2f, 0.2f, 0.3f);
+		ppropsSurfaceType.emission = rgba(0.04f, 0.04f, 0.04f, 1.0f);
+		ppropsSurfaceType.shininess = 60.0;
+		ppropsSurfaceType.translucent = true;
+		ppropsSurfaceType.twosided = true;
+	}
+		
 	for (const auto& i : ms)
 	{
 		namespace geom = bso::utilities::geometry;
-	
 		geom::quad_hexahedron spaceGeometry = i->getGeometry();
 		std::stringstream centerLabel;
 		centerLabel << i->getID();
@@ -127,6 +143,7 @@ MS_Model::MS_Model(const spatial_design::ms_building& ms,
 			throw std::runtime_error(errorMessage.str());
 		}
 		
+		//Add the space indixes to the visualization models
 		this->addLabel(labels,&lbprops,centerLabel.str(),spaceGeometry.getCenter());
 	}
 

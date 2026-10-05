@@ -33,6 +33,7 @@ private:
 
 SC_Model::SC_Model(const bso::spatial_design::sc_building& sc, const std::string& title /*= "sc_building"*/)
 {
+	std::cout << "SC_Model::SC_Model is used" << std::endl;
 	mTitle = title;
 	pprops_empty_cell.ambient = rgba(0.1f, 0.1f, 0.1f, 0.2f);
 	pprops_empty_cell.diffuse = rgba(0.1f, 0.1f, 0.1f, 0.03f);
@@ -53,7 +54,7 @@ SC_Model::SC_Model(const bso::spatial_design::sc_building& sc, const std::string
 	std::vector<double> xValues; xValues.push_back(0.0);
 	std::vector<double> yValues; yValues.push_back(0.0);
 	std::vector<double> zValues; zValues.push_back(0.0);
-
+	
 	for (unsigned int wIndex = 0; wIndex < sc.getWSize(); ++wIndex)
 	{
 		xValues.push_back(xValues[wIndex] + sc.getWValue(wIndex));
@@ -66,7 +67,7 @@ SC_Model::SC_Model(const bso::spatial_design::sc_building& sc, const std::string
 	{
 		zValues.push_back(zValues[hIndex] + sc.getHValue(hIndex));
 	}
-
+	
 	bso::utilities::geometry::vertex vMin, vMax;
 	for (unsigned int cellIndex = 1; cellIndex <= sc.getBRowSize(); ++cellIndex) // first index (=0) contains room ID
 	{
@@ -98,6 +99,7 @@ SC_Model::SC_Model(const bso::spatial_design::sc_building& sc, const std::string
 			this->addPolyhedron(polygons,&cellGeometry,&pprops_empty_cell,&lprops);
 		}
 	}
+	
 	pbsp = new random_bsp(polygons);
 }
 

@@ -318,10 +318,10 @@ namespace bso { namespace visualization
      */
     random_bsp::random_bsp(const std::list<polygon*> &polygons)
     {
-        std::vector<poly_frag*> fragv;
+		std::vector<poly_frag*> fragv;
 
         bsp_convert_objects(polygons, fragv);
-
+		
         //randomize the vector
         std::random_shuffle(fragv.begin(), fragv.end());
 
@@ -331,7 +331,6 @@ namespace bso { namespace visualization
         //initialise stats
         stats = bsp_stats();
         stats.nobjects = polyfrags.size();
-
         proot = bsp_build_tree(polyfrags, stats, store, 0);
     }
 
@@ -519,7 +518,7 @@ namespace bso { namespace visualization
 
     void bsp_create_partition_plane(poly_frag *pfrag, plane &P)
     {
-        /*
+		/*
            be carefull because points can be colinear such
            that no normal can be calculated
            find two non-colinear vectors and a point in the
@@ -535,16 +534,16 @@ namespace bso { namespace visualization
          */
         const edge *pedge, *pbound;
             pedge = pbound = pfrag->ppoly->get_boundary();
-
+		
         //let p0 be the first vertex
         vect3d p0 = *pedge->pvert;
-
+		
         //let p1 be the second vertex, v1 = p1-p0
         pedge = pedge->pnext;
         vect3d v1 = *pedge->pvert - p0,
                v2;
         double v1len = v1.length();
-
+		
         //find a suitable p2
         do {
             pedge = pedge->pnext;
@@ -559,12 +558,21 @@ namespace bso { namespace visualization
                 break;
 
         } while(pedge != pbound);
-
+		
         //maybe we should try different vertices for p0 and p1
         //before throwing an exception
         if (pedge == pbound)
-            throw std::string("bsp_create_partition_plane() : polygon too thin");
-
+		{			
+			std::stringstream errorMessage;
+					errorMessage << "nError, bsp_create_partition_plane() : polygon too thin.\n"
+								 << "vertex 1 " << p0 << "; " << v1 << "; " << v2 << "\n"
+								 << "(bso/visualization/bsp/bps.hpp)" << std::endl;
+					throw std::invalid_argument(errorMessage.str());
+			// error_handling from the origonal writter gave the following error: 
+			// terminate called after throwing an instance of 'std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >'
+			// Therefore, this error handeling is updated with one which gives more detail
+			//throw std::string("bsp_create_partition_plane() : polygon too thin");
+		}
         //create a plane
         vect3d n = cross(v1, v2).normalise();
         P = plane(n, dot(-n,p0));
@@ -650,7 +658,7 @@ namespace bso { namespace visualization
                  vertex_store &store,
                  int depth)
     {
-        int nrfrags = frags.size(); //not sure if size() is constant time
+		int nrfrags = frags.size(); //not sure if size() is constant time
 
         //check if we can termintate the recursion
         if (nrfrags < 1)
@@ -665,11 +673,11 @@ namespace bso { namespace visualization
             stats.nleafnodes++;
             return new bsp_node(frags);
         }
-
+		
         //create a partition plane from the first polygon fragment
         plane P;
         bsp_create_partition_plane(frags.front(), P);
-
+		
         //sort the fragments
         std::list<poly_frag*> uplist, downlist, onlist;
         std::list<poly_frag*>::iterator it;
@@ -724,13 +732,13 @@ namespace bso { namespace visualization
                 break;
             }
         }
-
+		
         //recurse on the up and down lists
         bsp_node *puptree    = bsp_build_tree(uplist, stats, store, depth+1);
         bsp_node *pdowntree  = bsp_build_tree(downlist, stats, store, depth+1);
-
         //create a bsp split node and return it
         stats.nsplitnodes++;
+		
         return new bsp_node(P, puptree, pdowntree, onlist);
     }
 

@@ -10,8 +10,8 @@ namespace bso { namespace spatial_design { namespace conformal {
 	: utilities::geometry::vertex::vertex(p)
 	{ // 
 		mBuildingModel = buildingModel;
-		mVertex = ((cf_geometry_model*)mBuildingModel)->addVertex(*this);
-		mVertex->addPoint(this);
+		mVertex = ((cf_geometry_model*)mBuildingModel)->addVertex(*this); // add the generated vertex to cf_building_model
+		mVertex->addPoint(this); // add the vertex to ...
 	} // 
 
 	cf_vertex* cf_point::getVertexPtr() const

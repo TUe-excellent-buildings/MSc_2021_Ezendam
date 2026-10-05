@@ -4,7 +4,7 @@
 namespace bso { namespace spatial_design { namespace conformal {
 	
 	cf_geometry_model::cf_geometry_model(const double& tol /*= 1e-3*/)
-	{ // 
+	{ //
 		mTol = tol;
 		mDec = -log10(tol);
 	} // empty ctor, nothing to initialize
@@ -13,14 +13,20 @@ namespace bso { namespace spatial_design { namespace conformal {
 	{ // 
 		// beware order is important here!
 		for (auto& i : mCFCuboids) delete i;
+		for (auto& i : mCFTetrahedrons) delete i;
+		for (auto& i : mCFTriPrisms) delete i;
 		for (auto& i : mCFRectangles) delete i;
+		for (auto& i : mCFTriangles) delete i;
 		for (auto& i : mCFLines) delete i;
 		for (auto& i : mCFVertices) delete i;
 
 		mCFVertices.clear();
 		mCFLines.clear();
 		mCFRectangles.clear();
+		mCFTriangles.clear();
 		mCFCuboids.clear();
+		mCFTetrahedrons.clear();
+		mCFTriPrisms.clear();
 	} // 
 
 	cf_vertex* cf_geometry_model::addVertex(const bso::utilities::geometry::vertex& p)
@@ -32,8 +38,10 @@ namespace bso { namespace spatial_design { namespace conformal {
 				return i;
 			}
 		}
+
 		mCFVertices.push_back(new cf_vertex(p));
-		mCFVertices.back()->round(mDec);
+		//mCFVertices.back()->round(mDec); // orgineel Sjonnies code werkt met deze waardes afgerond
+		
 		return mCFVertices.back();
 	} // 
 
@@ -62,7 +70,20 @@ namespace bso { namespace spatial_design { namespace conformal {
 		mCFRectangles.push_back(new cf_rectangle(quad, this));
 		return mCFRectangles.back();
 	} // 
-
+	
+	cf_triangle* cf_geometry_model::addTriangle(const bso::utilities::geometry::triangle& tri)
+	{ // 
+		for (const auto& i : mCFTriangles)
+		{
+			if (i->isSameAs(tri, mTol))
+			{
+				return i;
+			}
+		}
+		mCFTriangles.push_back(new cf_triangle(tri, this));
+		return mCFTriangles.back();
+	} // 
+	
 	cf_cuboid* cf_geometry_model::addCuboid(const bso::utilities::geometry::quad_hexahedron& qhex)
 	{ // 
 		for (const auto& i : mCFCuboids)
@@ -75,6 +96,32 @@ namespace bso { namespace spatial_design { namespace conformal {
 		mCFCuboids.push_back(new cf_cuboid(qhex, this));
 		return mCFCuboids.back();
 	} // 
+	
+	cf_tetrahedron* cf_geometry_model::addTetrahedron(const bso::utilities::geometry::tetrahedron& tetra)
+	{ // 
+		for (const auto& i : mCFTetrahedrons)
+		{
+			if (i->isSameAs(tetra, mTol))
+			{
+				return i;
+			}
+		}
+		mCFTetrahedrons.push_back(new cf_tetrahedron(tetra, this));
+		return mCFTetrahedrons.back();
+	} // 
+	
+	cf_triPrism* cf_geometry_model::addTriPrism(const bso::utilities::geometry::triangular_prism& triPtr)
+	{
+		for (const auto& i : mCFTriPrisms)
+		{
+			if (i->isSameAs(triPtr, mTol))
+			{
+				return i;
+			}
+		}
+		mCFTriPrisms.push_back(new cf_triPrism(triPtr, this));
+		return mCFTriPrisms.back();
+	}
 
 	void cf_geometry_model::removeLine(cf_line* lPtr)
 	{ // 
@@ -87,11 +134,23 @@ namespace bso { namespace spatial_design { namespace conformal {
 		mCFRectangles.erase(std::remove(mCFRectangles.begin(), mCFRectangles.end(), recPtr), mCFRectangles.end());
     delete recPtr;
 	} // 
+	
+	void cf_geometry_model::removeTriangle(cf_triangle* triPtr)
+	{ // 
+		mCFTriangles.erase(std::remove(mCFTriangles.begin(), mCFTriangles.end(), triPtr), mCFTriangles.end());
+    delete triPtr;
+	} // 
 
 	void cf_geometry_model::removeCuboid(cf_cuboid* cubPtr)
 	{ // 
 		mCFCuboids.erase(std::remove(mCFCuboids.begin(), mCFCuboids.end(), cubPtr), mCFCuboids.end());
     delete cubPtr;
+	} // 
+	
+	void cf_geometry_model::removeTetrahedron(cf_tetrahedron* tetPtr)
+	{ // 
+		mCFTetrahedrons.erase(std::remove(mCFTetrahedrons.begin(), mCFTetrahedrons.end(), tetPtr), mCFTetrahedrons.end());
+    delete tetPtr;
 	} // 
 	
 } // conformal

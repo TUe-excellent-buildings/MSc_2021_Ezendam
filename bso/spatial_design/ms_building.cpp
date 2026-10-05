@@ -19,6 +19,7 @@ ms_building::ms_building()
 } // ms_building() (empty constructor)
 
 ms_building::ms_building(std::string fileName)
+:	insertFileName(fileName)
 { // initilization by string or text file
 	mLastSpaceID = 0;
 	std::ifstream input;
@@ -45,10 +46,13 @@ ms_building::ms_building(std::string fileName)
 			{
 				continue; // continue to next line
 			}
-			else if (line.substr(0,2) == "R," || line.substr(0,2) == "r,")
+			else if (line.substr(0,1) == "R" || line.substr(0,1) == "r" || line.substr(0,1) == "N" || line.substr(0,1) == "n")
 			{
-				line.erase(0,2);
 				mSpaces.push_back(new ms_space(line));
+				if(sDefMethodDominant == "" || line.substr(0,1) == "N" || line.substr(0,1) == "n")
+				{
+					sDefMethodDominant = line.substr(0,1);
+				}
 			}
 			else
 			{
@@ -66,6 +70,15 @@ ms_building::ms_building(std::string fileName)
 		}
 	}
 	
+	if (mSpaces.size() == 0)
+	{
+		std::stringstream errorMessage;
+		errorMessage << "Could not initialize an MS building spatial design with the following input file:" << std::endl
+								 << ((fileName.empty())? "the file did not contain a valid definition of a space" : fileName) << std::endl
+								 << "(bso/spatial_design/ms_building.cpp). " << std::endl;
+		throw std::invalid_argument(errorMessage.str());
+	}
+		
 	mLastSpaceID = this->getLastSpaceID();
 	this->checkValidity();
 } // ms_building() (constructor using input file)
@@ -77,6 +90,9 @@ ms_building::ms_building(const ms_building& rhs)
 	{
 		mSpaces.push_back(new ms_space(*i));
 	}
+	
+	insertFileName = rhs.getInsertFileName();
+	sDefMethodDominant = rhs.getSDefMethodDominant();
 	
 	this->checkValidity();
 } // ms_building() (copy constructor)

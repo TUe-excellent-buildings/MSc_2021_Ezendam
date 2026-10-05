@@ -16,18 +16,26 @@ namespace bso { namespace spatial_design { namespace conformal {
 		cf_vertex* getVertexPtr() const;
 		void checkVertex(cf_vertex* pPtr);
 		
-		void addLine					(cf_line* 			lPtr	) = delete;
-		void addRectangle			(cf_rectangle* 	recPtr) = delete;
-		void addCuboid				(cf_cuboid* 		cubPtr) = delete;
-		void removeLine				(cf_line* 			lPtr	) = delete;
-		void removeRectangle	(cf_rectangle* 	recPtr) = delete;
-		void removeCuboid			(cf_cuboid* 		cubPtr) = delete;
-		void addPoint					(cf_point*			pPtr	) = delete;
+		void addLine				(cf_line* 			lPtr	) 	= delete;
+		void addRectangle			(cf_rectangle* 	recPtr) 		= delete;
+		void addTriangle			(cf_triangle* 		triPtr) 	= delete;
+		void addCuboid				(cf_cuboid* 		cubPtr)		= delete;
+		void addTetrahedron			(cf_tetrahedron* 	tetPtr)		= delete;
+		void addTriPrism			(cf_triPrism*		priPtr)		= delete;
+		void removeLine				(cf_line* 			lPtr	) 	= delete;
+		void removeRectangle		(cf_rectangle* 	recPtr) 		= delete;
+		void removeTriangle			(cf_triangle* 		triPtr) 	= delete;
+		void removeCuboid			(cf_cuboid* 		cubPtr) 	= delete;
+		void removeTetrahedron		(cf_tetrahedron* 	tetPtr)		= delete;
+		void removeTriPrism			(cf_triPrism* 		priPtr)		= delete;
+		void addPoint				(cf_point*			pPtr	) 	= delete;
 		
 		const std::vector<cf_vertex*		>& cfVertices() 	const { return mCFVertices;}
-		const std::vector<cf_line*			>& cfLines() 			const { return mCFLines;}
-		const std::vector<cf_rectangle*	>& cfRectangles() const { return mCFRectangles;}
+		const std::vector<cf_line*			>& cfLines() 		const { return mCFLines;}
+		const std::vector<cf_rectangle*		>& cfRectangles() 	const { return mCFRectangles;}
 		const std::vector<cf_cuboid*		>& cfCuboids() 		const { return mCFCuboids;}
+		const std::vector<cf_tetrahedron*	>& cfTetrahedron()	const { return mCFTetrahedrons;}
+		const std::vector<cf_triPrism*		>& cfTriPrism()		const { return mCFTriPrisms;}
 		const std::vector<cf_point*			>& cfPoints() 		const { return mCFPoints;}
 	};
 	

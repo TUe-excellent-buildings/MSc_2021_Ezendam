@@ -19,6 +19,7 @@ BOOST_AUTO_TEST_SUITE( grammar_rectangle_property_test )
 
 BOOST_AUTO_TEST_CASE( initialization )
 {
+	std::cout << "First rectangle test is performed good" << std::endl;
 	namespace cf = bso::spatial_design::conformal;
 	bso::spatial_design::ms_building msModel("grammar/ms_test_2.txt");
 	bso::spatial_design::cf_building cfModel(msModel);
@@ -33,6 +34,7 @@ BOOST_AUTO_TEST_CASE( initialization )
 	BOOST_REQUIRE(!rp1.isVertexProperty());
 	BOOST_REQUIRE(!rp1.isLineProperty());
 	BOOST_REQUIRE( rp1.isRectangleProperty());
+	BOOST_REQUIRE( rp1.isTriangleProperty());
 	BOOST_REQUIRE(!rp1.isCuboidProperty());
 	BOOST_REQUIRE(!rp1.isPointProperty());
 	BOOST_REQUIRE(!rp1.isEdgeProperty());

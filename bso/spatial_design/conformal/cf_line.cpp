@@ -19,6 +19,73 @@ namespace bso { namespace spatial_design { namespace conformal {
 		for (auto& i : mCFVertices) i->removeLine(this);
 	} // dtor
 	
+	
+	void cf_line::splitN(std::vector<cf_line*> newLine)
+	{
+		bool split = false;
+		if(newLine.size() > 1)
+		{
+			split = true;
+		}
+		
+		
+		if(split == true)
+		{
+			mDeletion = true;
+			
+			for(const auto j: newLine)
+			{
+				mGeometryModel->addLine(*j);
+			}
+			
+			for (auto& i : mCFEdges)
+			{
+				i->removeLine(this);
+				
+				for(const auto j: newLine)
+				{
+					j->addEdge(i);
+					i->addLine(j);
+				}
+			}
+			
+			mCFEdges.clear();
+		}
+	} // splitN()
+	
+	void cf_line::splitT(std::vector<cf_line*> newLine)
+	{
+		bool split = false;
+		if(newLine.size() > 1)
+		{
+			split = true;
+		}
+		
+		
+		if(split == true)
+		{
+			mDeletion = true;
+			
+			for(const auto j: newLine)
+			{
+				mGeometryModel->addLine(*j);
+			}
+			
+			for (auto& i : mCFEdges)
+			{
+				i->removeLine(this);
+				
+				for(const auto j: newLine)
+				{
+					j->addEdge(i);
+					i->addLine(j);
+				}
+			}
+			
+			mCFEdges.clear();
+		}		
+	} // splitT()
+	
 	void cf_line::split(cf_vertex* pPtr)
 	{
 		for (auto& i : mCFVertices)
@@ -47,6 +114,22 @@ namespace bso { namespace spatial_design { namespace conformal {
 	} // split()
 	
 	void cf_line::checkAssociated(cf_vertex* pPtr)
+	{
+		for (auto& i : mCFEdges)
+		{
+			i->checkVertex(pPtr);
+			for (auto& j : i->cfSurfaces())
+			{
+				j->checkVertex(pPtr);
+			}
+			for (auto& j : i->cfSpaces())
+			{
+				j->checkVertex(pPtr);
+			}
+		}
+	} // checkAssociated()
+	
+	void cf_line::checkAssociatedT(cf_vertex* pPtr)
 	{
 		for (auto& i : mCFEdges)
 		{

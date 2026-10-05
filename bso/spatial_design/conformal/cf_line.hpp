@@ -13,12 +13,15 @@ namespace bso { namespace spatial_design { namespace conformal {
 		~cf_line();
 		
 		void split(cf_vertex* pPtr);
+		void splitN(std::vector<cf_line*> newLine);
+		void splitT(std::vector<cf_line*> newLine);
 		void checkAssociated(cf_vertex* pPtr);
+		void checkAssociatedT(cf_vertex* pPtr);
 
 		void addLine					(cf_line* 			lPtr	) = delete;
-		void removeLine				(cf_line* 			lPtr	) = delete;
+		void removeLine					(cf_line* 			lPtr	) = delete;
 		void addPoint					(cf_point*			pPtr	) = delete;
-		void addSurface				(cf_surface*		srfPtr) = delete;
+		void addSurface					(cf_surface*		srfPtr	) = delete;
 		void addSpace					(cf_space*			spPtr	) = delete;
 		
 		const std::vector<cf_line*			>& cfLines() 			const = delete;

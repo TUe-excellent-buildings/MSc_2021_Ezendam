@@ -13,20 +13,29 @@ namespace bso { namespace spatial_design { namespace conformal {
 		~cf_rectangle();
 		
 		void split(cf_vertex* pPtr);
+		void splitN(std::vector<cf_rectangle*> newRect);
 		void checkAssociated(cf_vertex* pPtr);
 		
-		void addLine					(cf_line* 			lPtr	) = delete;
-		void addRectangle			(cf_rectangle* 	recPtr) = delete;
-		void removeLine				(cf_line* 			lPtr	) = delete;
-		void removeRectangle	(cf_rectangle* 	recPtr) = delete;
-		void addPoint					(cf_point*			pPtr	) = delete;
-		void addEdge					(cf_edge*				ePtr	) = delete;
-		void addSpace					(cf_space*			spPtr	) = delete;
+		void addLine					(cf_line* 			lPtr	) 	= delete;
+		void addRectangle				(cf_rectangle* 		recPtr	) 	= delete;
+		void addTriangle				(cf_triangle* 		triPtr	) 	= delete;
+		void addTetrahedron				(cf_tetrahedron* 	tetPtr	) 	= delete;
+		void removeLine					(cf_line* 			lPtr	) 	= delete;
+		void removeRectangle			(cf_rectangle* 		recPtr	) 	= delete;
+		void removeTriangle				(cf_triangle* 		triPtr	) 	= delete;
+		void removeTetrahedron			(cf_tetrahedron* 	tetPtr	) 	= delete;
+		void addPoint					(cf_point*			pPtr	) 	= delete;
+		void addEdge					(cf_edge*			ePtr	) 	= delete;
+		void addSpace					(cf_space*			spPtr	) 	= delete;
 		
-		const std::vector<cf_rectangle*	>& cfRectangles() = delete;
+		const std::vector<cf_rectangle*		>& cfRectangles() 	= delete;
+		const std::vector<cf_triangle*		>& cfTriangle()		= delete;
+		const std::vector<cf_tetrahedron*	>& cfTetrahedrons()	= delete;
 		const std::vector<cf_point*			>& cfPoints() 		= delete;
-		const std::vector<cf_edge*			>& cfEdges() 			= delete;
+		const std::vector<cf_edge*			>& cfEdges() 		= delete;
 		const std::vector<cf_space*			>& cfSpaces() 		= delete;
+		
+		bool markInVisualization = false;
 	};
 	
 } // conformal

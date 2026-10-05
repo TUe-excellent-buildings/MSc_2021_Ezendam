@@ -21,12 +21,13 @@ namespace bso { namespace utilities { namespace geometry {
 	
 	triangle::triangle() : polygon()
 	{
-
+		//std::cout << "triangle::triangle() : polygon()" << std::endl; //tessa defined
 	} // empty ctor()
 	
 	template <class CONTAINER>
 	triangle::triangle(const CONTAINER& l, const double& tol/*= 1e-3*/) : polygon(l, tol)
 	{
+		//std::cout << "triangle::triangle(const CONTAINER& l, const double& tol/*= 1e-3*/) : polygon(l, tol)" << std::endl; //tessa defined
 		try 
 		{
 			this->sortPoints(tol);
@@ -44,6 +45,7 @@ namespace bso { namespace utilities { namespace geometry {
 	
 	triangle::triangle(const std::initializer_list<vertex>&& l, const double& tol /*= 1e-3*/) : polygon(std::move(l), tol)
 	{
+		//std::cout << "triangle::triangle(const std::initializer_list<vertex>&& l, const double& tol /*= 1e-3*/) : polygon(std::move(l), tol)" << std::endl; //tessa defined
 		try 
 		{
 			this->sortPoints(tol);
@@ -95,6 +97,7 @@ namespace bso { namespace utilities { namespace geometry {
 	bool triangle::isInsideOrOn(const vertex& p1, const double& tol /*= 1e-3*/) const
 	{ // solution by Michael Ulm on: https://math.stackexchange.com/questions/4322/check-whether-a-point-is-within-a-3d-triangle
 		if (!this->isCoplanar(p1,tol)) return false;
+
 		for (const auto& i : mVertices) if (i.isSameAs(p1,tol)) return true; // its on
 		for (const auto& i : mLineSegments) if (i.isOnLine(p1,tol)) return true; // it on
 		

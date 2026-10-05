@@ -21,7 +21,7 @@ namespace bso { namespace utilities { namespace geometry {
 	bool vector::isParallel(const vector& rhs, const double& tol /*= 1e-3*/) const
 	{	// checks if the vector is parallel to rhs
 		if (this->isZero(tol) || rhs.isZero(tol)) return false;
-		return (this->normalized().cross(rhs.normalized())).isZero(tol);
+		return (this ->normalized().cross(rhs.normalized())).isZero(tol);
 	} // isParallel()
 	
 	bool vector::isCodirectional(const vector& rhs, const double& tol /*= 1e-3*/) const

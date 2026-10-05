@@ -6,20 +6,20 @@ A,	B,	quad_hexahedron, 1
 A,	F,	quad_hexahedron, 1
 
 #	type_ID_1,	type_ID_2,	Assigned type wall, 	Assigned type_ID wall, assigned_type_floor, assigned type_ID floor
-B,	 ,		 ,		none,					-,		flat_shell,		1
-B,	 ,		T,		truss,				1,		flat_shell,		1
-B,	 ,		B,		beam,					1,		flat_shell,		1
+B,	 ,		 ,		none,			-,		flat_shell,		1
+B,	 ,		T,		truss,			1,		flat_shell,		1
+B,	 ,		B,		beam,			1,		flat_shell,		1
 B,	 ,		F,		flat_shell,		1,		flat_shell,		1
-B,	 ,		E,		none,					-,		flat_shell,		1
+B,	 ,		E,		none,			-,		flat_shell,		1
 B,	 ,		G,		flat_shell,		1,		flat_shell,		1
-B,	T,		T,		truss,				1,		flat_shell,		1
-B,	T,		B,		beam,					1,		flat_shell,		1
+B,	T,		T,		truss,			1,		flat_shell,		1
+B,	T,		B,		beam,			1,		flat_shell,		1
 B,	T,		F,		flat_shell,		1,		flat_shell,		1
-B,	T,		E,		truss,				1,		flat_shell,		1
+B,	T,		E,		truss,			1,		flat_shell,		1
 B,	T,		G,		flat_shell,		1,		flat_shell,		1
-B,	B,		B,		beam,					1,		flat_shell,		1
+B,	B,		B,		beam,			1,		flat_shell,		1
 B,	B,		F,		flat_shell,		1,		flat_shell,		1
-B,	B,		E,		beam,					1,		flat_shell,		1
+B,	B,		E,		beam,			1,		flat_shell,		1
 B,	B,		G,		flat_shell,		1,		flat_shell,		1
 B,	F,		F,		flat_shell,		1,		flat_shell,		1
 B,	F,		E,		flat_shell,		1,		flat_shell,		1

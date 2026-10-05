@@ -15,6 +15,8 @@ private:
 	std::vector<ms_space*> mSpaces;
 	mutable unsigned int mLastSpaceID;
 	void checkValidity() const;
+	std::string insertFileName;
+	std::string sDefMethodDominant; // The dominent space definition method; 'r' or 'R' indicate orthogonal and 'n' or 'N' indicate the dominent non-orthogonal spaces if anny is defined with this indication. 
 public:
 	ms_building(); // empty constructor
 	ms_building(std::string fileName); // initilization by string or text file
@@ -22,6 +24,8 @@ public:
 	ms_building(const sc_building& sc); // convert SC to MS
 	~ms_building(); // destructor
 	
+	const std::string getInsertFileName() const{return insertFileName;}
+	const std::string getSDefMethodDominant() const {return sDefMethodDominant;}
 	void writeToFile(std::string fileName) const;
 	std::vector<ms_space*> getSpacePtrs() const;
 	ms_space* getSpacePtr(const ms_space& space) const;

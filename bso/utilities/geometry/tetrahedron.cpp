@@ -43,12 +43,13 @@ namespace bso { namespace utilities { namespace geometry {
 
 	tetrahedron::tetrahedron() : polyhedron()
 	{ //
-		
+		//std::cout << "tetrahedron::tetrahedron() : polyhedron() is working" << std::endl; //tessa defined
 	} // empty ctor()
 
 	template <typename CONTAINER>
 	tetrahedron::tetrahedron(const CONTAINER& l, const double& tol /*= 1e-3*/) : polyhedron(l,tol)
 	{ //
+		//std::cout << "tetrahedron::tetrahedron(const CONTAINER& l, const double& tol /*= 1e-3*/) : polyhedron(l,tol) is working" << std::endl; //tessa defined
 		try 
 		{
 			this->sortPoints(tol);
@@ -66,6 +67,7 @@ namespace bso { namespace utilities { namespace geometry {
 
 	tetrahedron::tetrahedron(const std::initializer_list<vertex>&& l, const double& tol /*= 1e-3*/) : polyhedron(std::move(l),tol)
 	{ //
+		//std::cout << "tetrahedron::tetrahedron(const std::initializer_list<vertex>&& l, const double& tol /*= 1e-3*/) : polyhedron(std::move(l),tol) is working" << std::endl; //tessa defined
 		try 
 		{
 			this->sortPoints(tol);
@@ -84,6 +86,7 @@ namespace bso { namespace utilities { namespace geometry {
 	tetrahedron::tetrahedron(const tetrahedron& rhs, const double& tol /*= 1e-3*/) : polyhedron(rhs) // use default of parent class
 	{ // copy ctor, need this for mPolygons, to be copied properly
 		this->sortPoints(tol); // sort it without the try-catch structure, as it is initialized from a proper tetrahedron already
+		//std::cout << "tetrahedron::tetrahedron(const tetrahedron& rhs, const double& tol /*= 1e-3*/) : polyhedron(rhs) is working" << std::endl; //tessa defined
 		// mPolygons is reinitialized in the sort points
 	} // ocpy ctor
 	

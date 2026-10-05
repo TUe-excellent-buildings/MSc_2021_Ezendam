@@ -4,7 +4,7 @@
 namespace bso { namespace grammar {
 
 grammar::grammar(const spatial_design::cf_building& cf)
-:	mCFBuilding(cf),
+:	mCFBuilding(cf), 
 	mLoadPanel(structural_design::component::structure())
 {
 	for (const auto& i : mCFBuilding.cfVertices())
@@ -19,9 +19,17 @@ grammar::grammar(const spatial_design::cf_building& cf)
 	{
 		mRectangleProperties[i] = new rule_set::rectangle_property(i);
 	}
+	for (const auto& i : mCFBuilding.cfTriangles())
+	{
+		mTriangleProperties[i] = new rule_set::triangle_property(i);
+	}
 	for (const auto& i : mCFBuilding.cfCuboids())
 	{
 		mCuboidProperties[i] = new rule_set::cuboid_property(i);
+	}
+	for (const auto& i : mCFBuilding.cfTriPrism())
+	{
+		mTriprismProperties[i] = new rule_set::triprism_property(i);
 	}
 	for (const auto& i : mCFBuilding.cfPoints())
 	{
@@ -38,8 +46,7 @@ grammar::grammar(const spatial_design::cf_building& cf)
 	for (const auto& i : mCFBuilding.cfSpaces())
 	{
 		mSpaceProperties[i] = new rule_set::space_property(i);
-	}
-	
+	}	
 } // ctor()
 
 grammar::~grammar()
@@ -47,7 +54,9 @@ grammar::~grammar()
 	for (auto& i : mVertexProperties) delete i.second;
 	for (auto& i : mLineProperties) delete i.second;
 	for (auto& i : mRectangleProperties) delete i.second;
+	for (auto & i: mTriangleProperties) delete i.second;
 	for (auto& i : mCuboidProperties) delete i.second;
+	for (auto & i: mTriprismProperties) delete i.second;
 	for (auto& i : mPointProperties) delete i.second;
 	for (auto& i : mEdgeProperties) delete i.second;
 	for (auto& i : mSurfaceProperties) delete i.second;

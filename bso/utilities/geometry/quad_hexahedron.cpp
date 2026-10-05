@@ -6,11 +6,12 @@ namespace bso { namespace utilities { namespace geometry {
 	void quad_hexahedron::sortPoints(const double& tol /*= 1e-3*/)
 	{ // 
 		if (mSize != 8)
-		{
+		{	
 			std::stringstream errorMessage;
 			errorMessage << "Cannot sort quadrilaterl faced hexahedron:\n"
-										<< "received " << mSize << "vertices, expected 8.\n"
-									 << "(bso/utilities/geoemtry/quad_hexahedron.cpp)" << std::endl;
+										<< "received " << mSize << " vertices, expected 8: " << std::endl;
+										for(const auto i: mVertices){errorMessage << i;}
+										errorMessage << "(bso/utilities/geoemtry/quad_hexahedron.cpp)" << std::endl;
 			throw std::invalid_argument(errorMessage.str());
 		}
 		quadrilateral current, opposing;
@@ -26,7 +27,7 @@ namespace bso { namespace utilities { namespace geometry {
 						current = quadrilateral({mVertices[0],mVertices[i],mVertices[j],mVertices[k]},tol);
 						currentFound = true;
 					}
-					catch (std::exception& e) { /* do nothing */}
+					catch (std::exception& e) {  /* do nothing */ } 
 					
 					std::vector<vertex> tempOpposing;
 					tempOpposing.reserve(4);
@@ -43,7 +44,7 @@ namespace bso { namespace utilities { namespace geometry {
 						opposing = quadrilateral(tempOpposing,tol);
 						opposingFound = true;
 					}
-					catch(std::exception& e) { /* do nothing */ }
+					catch(std::exception& e) { /* do nothing */ } 
 					bool intersection = false;
 					if (opposingFound)
 					{ // check if any of the line segments between the two quadrilaterals intersect
@@ -133,7 +134,7 @@ namespace bso { namespace utilities { namespace geometry {
 				indexFound = true;
 				break;
 			}
-			catch(std::exception& e) { /* do nothing */}
+			catch(std::exception& e) { /* do nothing */ } 
 		}
 		if (!indexFound)
 		{
@@ -190,9 +191,15 @@ namespace bso { namespace utilities { namespace geometry {
 			mPolygons.reserve(6);
 			mSizePolygons = 6;
 			for (unsigned int i = 0; i < 4; ++i)
+			{
 				mPolygons.push_back(new quadrilateral({mVertices[i],mVertices[(i+1)%4],mVertices[i+4],mVertices[((i+1)%4)+4]},tol));
+				mQuadrilaterals.push_back(quadrilateral({mVertices[i],mVertices[(i+1)%4],mVertices[i+4],mVertices[((i+1)%4)+4]},tol));
+			}
 			for (unsigned int i = 0; i < 2; ++i)
+			{
 				mPolygons.push_back(new quadrilateral({mVertices[0+i*4],mVertices[1+i*4],mVertices[2+i*4],mVertices[3+i*4]},tol));
+				mQuadrilaterals.push_back(quadrilateral({mVertices[i],mVertices[(i+1)%4],mVertices[i+4],mVertices[((i+1)%4)+4]},tol));
+			}
 		}
 		catch (std::exception& e)
 		{
@@ -225,7 +232,8 @@ namespace bso { namespace utilities { namespace geometry {
 		}
 		// done!
 	} // sortPoints()
-
+	
+	
 	quad_hexahedron::quad_hexahedron() : polyhedron()
 	{ // 
 		

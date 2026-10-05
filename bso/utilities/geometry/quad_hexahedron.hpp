@@ -10,6 +10,7 @@ namespace bso { namespace utilities { namespace geometry {
 	{
 	protected:
 		std::vector<tetrahedron> mTetrahedrons; // decomposition into tetrahedrons
+		std::vector<quadrilateral> mQuadrilaterals; // store saporatly since mPolygons will not always work
 		void sortPoints(const double& tol = 1e-3);
 	public:
 		quad_hexahedron();
@@ -22,6 +23,11 @@ namespace bso { namespace utilities { namespace geometry {
 		double getVolume() const;
 		bool isInside(const vertex& p1, const double& tol = 1e-3) const;
 		bool isInsideOrOn(const vertex& p1, const double& tol = 1e-3) const;
+		
+		const std::vector<tetrahedron>& 		getTetrahedrons() 		const { return mTetrahedrons;}
+		const std::vector<quadrilateral>& 			getQuadrilaterals() 		const { return mQuadrilaterals;}
+		
+		// void isOposide();
 	};
 	
 } // namespace geometry

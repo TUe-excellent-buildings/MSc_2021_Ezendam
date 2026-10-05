@@ -25,6 +25,50 @@ namespace bso { namespace spatial_design { namespace conformal {
 		for (const auto& i : mCFLines) i->removeRectangle(this);
 	} // dtor
 	
+	
+	void cf_rectangle::splitN(std::vector<cf_rectangle*> newRect)
+	{
+		//Declarations
+		std::vector<cf_rectangle*> newRectangles;
+		bool split = false;
+		
+		//Definition of new rectangles
+		int k = 0;
+		for (const auto i : newRect)
+		{
+			split = true;
+			std::vector<utilities::geometry::vertex> cornerVertices;
+			for(auto j = i->begin(); j != i->end(); j++)
+			{
+				cornerVertices.push_back(*j);
+			}
+			
+			newRectangles.push_back(mGeometryModel->addRectangle(
+					utilities::geometry::quadrilateral(cornerVertices, mGeometryModel->tolerance())));
+			k++;
+		}
+		
+		//Removing origonal rectangle and replace it with new rectangles
+		if (split)
+		{
+			mDeletion = true;
+			for (auto& i : mCFSurfaces)
+			{
+				i->removeRectangle(this);
+				for (const auto& j : newRectangles)
+				{
+					i->addRectangle(j);
+					j->addSurface(i);
+				}
+			}	
+			mCFSurfaces.clear();
+		}
+	}
+	
+	
+	
+	
+	
 	void cf_rectangle::split(cf_vertex* pPtr)
 	{ //
 		for (auto& i : mCFVertices)

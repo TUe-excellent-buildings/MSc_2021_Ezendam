@@ -47,12 +47,13 @@ namespace bso { namespace utilities { namespace geometry {
 
 	quadrilateral::quadrilateral()
 	{ // 
-		
+		//std::cout << "quadrilateral::quadrilateral() is working" << std::endl;
 	} //  empty ctor
 
 	template <class CONTAINER>
 	quadrilateral::quadrilateral(const CONTAINER& l, const double& tol /*= 1e-3*/) : polygon(l,tol)
 	{ // 
+		//std::cout << "quadrilateral::quadrilateral(const CONTAINER& l, const double& tol /*= 1e-3*/) : polygon(l,tol) is working" << std::endl;
 		try 
 		{
 			this->sortPoints(tol);
@@ -70,6 +71,7 @@ namespace bso { namespace utilities { namespace geometry {
 	
 	quadrilateral::quadrilateral(const std::initializer_list<vertex>&& l, const double& tol /*= 1e-3*/) : polygon(std::move(l),tol)
 	{ // 
+		//std::cout << "quadrilateral::quadrilateral(const std::initializer_list<vertex>&& l, const double& tol /*= 1e-3*/) : polygon(std::move(l),tol) is working" << std::endl;
 		try 
 		{
 			this->sortPoints(tol);
@@ -103,12 +105,22 @@ namespace bso { namespace utilities { namespace geometry {
 		{
 			for (const auto& i : mLineSegments)
 			{
-				if (i.isOnLine(p1,tol)) return false;
+				if (i.isOnLine(p1,tol)) 
+				{
+					return false;
+				}
 			}
 			for (const auto& i : mVertices)
 			{
-				if (i.isSameAs(p1,tol)) return false;
+				//std::cout << "is " << i << " theSameAs " << p1 << " ?" << std::endl;
+				if (i.isSameAs(p1,tol)) 
+				{
+					//std::cout << "true" << std::endl;
+					return false;
+				}
+				//std::cout << "false" << std::endl;
 			}
+			//std::cout << "quadrilateral::isInside(const vertex& p1, const double& tol /*= 1e-3*/) returns: true for " << p1 << " on " << *this << std::endl;
 			return true;
 		}
 		else return false;
@@ -118,7 +130,7 @@ namespace bso { namespace utilities { namespace geometry {
 	{ // only holds for convex quadrilaterals
 		triangle t1 = {mVertices[0],mVertices[1],mVertices[2]};
 		triangle t2 = {mVertices[0],mVertices[3],mVertices[2]};
-
+		
 		return (t1.isInsideOrOn(p1,tol) || t2.isInsideOrOn(p1,tol));
 	} //  isInside()
 	

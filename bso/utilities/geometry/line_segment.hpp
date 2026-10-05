@@ -27,7 +27,8 @@ namespace bso { namespace utilities { namespace geometry {
 		bool isSameAs(const line_segment& rhs, const double& tol = 1e-3) const;
 		bool isOnLine(const vertex& c, const double& tol = 1e-3) const;
 		bool intersectsWith(const line_segment& rhs, const double& tol = 1e-3) const;
-		bool intersectsWith(const line_segment& rhs, vertex& v, const double& tol = 1e-3) const;
+		bool intersectsWith(const line_segment& rhs, vertex& v, const double& tol = 1e-3) const; // only intersection within line_segment length
+		bool vIntersects(const line_segment& rhs, vertex& v, const double& tol = 1e-3) const; // intersection allong the whole vector+orgin point length
 		vertex getPointClosestTo(const vertex& p) const;
 		vector getVector(const bool& direction = 1) const; // 1 (true) for positive, 0 (false) for negative
 		double getLength() const;

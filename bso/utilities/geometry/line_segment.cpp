@@ -75,8 +75,8 @@ namespace bso { namespace utilities { namespace geometry {
 	} // isSameAs()
 	
 	bool line_segment::isOnLine(const vertex& c, const double& tol /*= 1e-3*/) const
-	{
-		vector vAB = mVertices[1] - mVertices[0]; 
+	{		
+		vector vAB = mVertices[1] - mVertices[0];
 		vector vAC = c - mVertices[0];
 		double dist = vAB.dot(vAC)/vAB.dot(vAB);
 		if (!vAB.isParallel(vAC,tol)) return false;
@@ -105,12 +105,46 @@ namespace bso { namespace utilities { namespace geometry {
 					(s > 0.0-tol && s < 1.0+tol && t > 0.0+tol && t < 1.0-tol))
 			{ // if the scalars are smaller than one, the intersection point lies on both lines
 			pInt = (mVertices[0] + (s * v1));
-			pInt.round(dec);
+			//pInt.round(dec); Sjonnies origonal code (orthogonal rectangular) rounded this value
 			return true;
 			}
 			else return false;
 		}
 	} // intersectsWith()
+	
+	
+	bool line_segment::vIntersects(const line_segment& rhs, vertex& pInt, const double& tol /*= 1e-3*/) const
+	{
+		vector v1 = mVertices[1] - mVertices[0];
+		vector v2 = rhs[1] - rhs[0];
+		vector v3 = rhs[0] - mVertices[0];
+		
+		int dec = (int)(-log10(tol));
+				
+		if (v1.isParallel(v2,tol)) 
+		{
+			return false; 
+		}
+		else if (!v3.isPerpendicular(v1.cross(v2), tol)) 
+		{
+			return false; 
+		}
+		else
+		{
+			double s = v2.cross(v3).norm() / v2.cross(v1).norm();
+			if (!v2.cross(v3).isCodirectional(v2.cross(v1), tol)) s = -s;
+			double t = v1.cross(-v3).norm() / v1.cross(v2).norm();
+			if (!v1.cross(-v3).isCodirectional(v1.cross(v2),tol)) t = -t;
+			
+			pInt = (mVertices[0] + (s * v1));
+			 //pInt.round(dec);  Sjonnies origonal code (orthogonal rectangular) rounded this value
+			
+			pInt = (mVertices[0] + (s * v1));
+			// pInt.round(dec); Sjonnies origonal code (orthogonal rectangular) rounded this value
+			return true;
+		}
+	} // viintersects()
+
 	
 	bool line_segment::intersectsWith(const line_segment& rhs, const double& tol /*= 1e-3*/) const
 	{

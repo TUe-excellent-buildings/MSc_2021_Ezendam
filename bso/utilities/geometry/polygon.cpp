@@ -63,7 +63,7 @@ namespace bso { namespace utilities {  namespace geometry {
 			errorMessage << "(bso/utilities/geometry/polygon.cpp)" << std::endl;
 			throw std::invalid_argument(errorMessage.str());
 		}
-		if (!this->isCoplanarItself())
+		if (!this->isCoplanarItself(tol)) // Tessa_change: tolerantie toegevoegd
 		{
 			std::stringstream errorMessage;
 			errorMessage << "Cannot initialize polygon with vertices that are out of plane.\n"
@@ -87,7 +87,7 @@ namespace bso { namespace utilities {  namespace geometry {
 				return false;
 			}
 		}
-		return true;;
+		return true;
 	} // isCoplanarItself()
 	
 	void polygon::sortPoints(const double& tol /*= 1e-3*/)
@@ -102,17 +102,20 @@ namespace bso { namespace utilities {  namespace geometry {
 	
 	polygon::polygon()
 	{
+		//std::cout << "polygon::polygon() is working" << std::endl; //Tessa defined
 		mSize = 0;
 	} // empty ctor
 
 	template <class CONTAINER>
 	polygon::polygon(const CONTAINER& l, const double& tol /*= 1e-3*/)
 	{
+		//std::cout << "polygon::polygon(const CONTAINER& l, const double& tol /*= 1e-3*/) is working" << std::endl; //Tessa defined
 		this->initFromVertices(l,tol);
 	}
 	
 	polygon::polygon(const std::initializer_list<vertex>&& l, const double& tol /*= 1e-3*/)
 	{
+		//std::cout << "polygon::polygon(const std::initializer_list<vertex>&& l, const double& tol /*= 1e-3*/) is working" << std::endl; //Tessa defined
 		this->initFromVertices(l, tol);
 	}
 	
@@ -211,7 +214,7 @@ namespace bso { namespace utilities {  namespace geometry {
 				// if (s > -tol && s < 1 + tol)
 				// {
 					// intersectVertices.push_back(vertex(i[0] + v1 * s));
-					// intersectVertices.back().round((int)(-log10(tol)));
+					// intersectVertices.back().round((int)(-log10(tol))); // in de non-orthogonal case may this round deliver problems
 				// }
 			// }
 		// }
@@ -241,6 +244,22 @@ namespace bso { namespace utilities {  namespace geometry {
 	bool polygon::isCoplanar(const vertex& p1, const double& tol /*= 1e-3*/) const
 	{
 		vector v1 = {p1-mVertices[0]};
+		vector v2 = {0,0,0};
+		if (v1.isSameAs(v2, tol))
+		{
+			v1 = {p1-mVertices[1]};
+		}
+		return mNormal.isPerpendicular(v1, tol);
+	}
+	
+	bool polygon::isCoplanarN(const vertex& p1, const double& tol /*= 1e-3*/) const // Tessa defined due to wrongly performed check in case of v1={0,0,0}
+	{
+		vector v1 = {p1-mVertices[0]};
+		vector v2 = {0,0,0};
+		if (v1.isSameAs(v2, tol))
+		{
+			v1 = {p1-mVertices[1]};
+		}
 		return mNormal.isPerpendicular(v1, tol);
 	}
 	

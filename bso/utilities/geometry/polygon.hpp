@@ -44,6 +44,7 @@ namespace bso { namespace utilities { namespace geometry {
 		// bool intersectsWith(const polygon& rhs, line_segment lInt, const double& tol = 1e-3) const;
 		// bool intersectsWith(const polygon& rhs, const double& tol = 1e-3) const;
 		bool isCoplanar(const vertex& p1, const double& tol = 1e-3) const;
+		bool isCoplanarN(const vertex& p1, const double& tol = 1e-3) const; // onnodig sinds isCoplannar is aangepast, maar staat nog wel in Toolbox
 		bool isParallel(const polygon& pol1, const double& tol = 1e-3) const;
 		bool isParallel(const vector& v1, const double& tol = 1e-3) const;
 		bool sameSide(const vertex& p1, const vertex& p2, const double& tol = 1e-3) const;
@@ -58,6 +59,7 @@ namespace bso { namespace utilities { namespace geometry {
 		auto end() const {return mVertices.end();}
 		
 		const auto& getLines() const {return mLineSegments;}
+		const auto& getVertices() const {return mVertices;} // can give non logical results as return
 
 		const vertex& operator [] (const unsigned int& index) const;
 		

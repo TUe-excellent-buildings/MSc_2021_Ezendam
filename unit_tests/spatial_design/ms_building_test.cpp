@@ -80,6 +80,84 @@ BOOST_AUTO_TEST_SUITE( building_initialization )
 
 		BOOST_REQUIRE_THROW(b1 = ms_building("non_existent_file.txt"), std::invalid_argument);
 	}
+	
+	BOOST_AUTO_TEST_CASE( initialize_from_file_5 )
+	{
+		ms_building b1("spatial_design/ms_test_5.txt");
+		std::stringstream sstr;
+		sstr << b1;
+		
+		ms_space* s1 = b1.getSpacePtrs()[0];
+		
+		Eigen::Vector3d coord = s1->getCoordinates(), coordCheck;
+		coordCheck << 0,0,0;
+		Eigen::Vector3d dims  = s1->getDimensions(), dimCheck;
+		dimCheck << 0,0,0;
+		std::vector<bso::utilities::geometry::vertex*> pVertex  = s1->getVertices();
+		
+		bso::utilities::geometry::vertex p1 = {0,0,0};
+		bso::utilities::geometry::vertex p2 = {6000,0,0};
+		bso::utilities::geometry::vertex p3 = {0,6000,0};
+		bso::utilities::geometry::vertex p4 = {6000,6000,0};
+		bso::utilities::geometry::vertex p5 = {0,0,6000};
+		bso::utilities::geometry::vertex p6 = {6000,0,6000};
+		bso::utilities::geometry::vertex p7 = {0,6000,6000};
+		bso::utilities::geometry::vertex p8 = {6000,6000,6000};	
+		
+		bool verticesCheck = true;
+		if(std::find(*(pVertex.begin()),*(pVertex.end()),p1) == *(pVertex.end())){verticesCheck = false;}
+		if(std::find(*(pVertex.begin()),*(pVertex.end()),p2) == *(pVertex.end())){verticesCheck = false;}
+		if(std::find(*(pVertex.begin()),*(pVertex.end()),p3) == *(pVertex.end())){verticesCheck = false;}
+		if(std::find(*(pVertex.begin()),*(pVertex.end()),p4) == *(pVertex.end())){verticesCheck = false;}
+		if(std::find(*(pVertex.begin()),*(pVertex.end()),p5) == *(pVertex.end())){verticesCheck = false;}
+		if(std::find(*(pVertex.begin()),*(pVertex.end()),p6) == *(pVertex.end())){verticesCheck = false;}
+		if(std::find(*(pVertex.begin()),*(pVertex.end()),p7) == *(pVertex.end())){verticesCheck = false;}
+		if(std::find(*(pVertex.begin()),*(pVertex.end()),p8) == *(pVertex.end())){verticesCheck = false;}
+
+		BOOST_REQUIRE(verticesCheck = true);
+		BOOST_REQUIRE(sstr.str() == "N,1  ,0,0,0  ,6000,0,0  ,0,6000,0  ,6000,6000,0  ,0,0,6000  ,6000,0,6000  ,0,6000,6000  ,6000,6000,6000");
+		BOOST_REQUIRE(b1.getSpacePtrs().size() == 1);
+		BOOST_REQUIRE(coord == coordCheck);
+		BOOST_REQUIRE(dims == dimCheck);
+	}
+	
+	BOOST_AUTO_TEST_CASE( initialize_from_file_6 )
+	{
+		ms_building b1("spatial_design/ms_test_6.txt");
+		std::stringstream sstr, check;
+		sstr << b1;
+		check << "R,1,0,0,0,4000,3000,2000" << std::endl
+					<< "N,2  ,0,0,0  ,6000,0,0  ,0,6000,0  ,6000,6000,0  ,0,0,6000  ,6000,0,6000  ,0,6000,6000  ,6000,6000,6000" ;
+		
+		ms_space* s1 = b1.getSpacePtrs()[0];
+
+		BOOST_REQUIRE(sstr.str() == check.str());
+		BOOST_REQUIRE(b1.getSpacePtrs().size() == 2);
+		std::string checksDef = "N";
+		BOOST_REQUIRE(b1.getSDefMethodDominant() == checksDef);
+		
+		sstr.str(std::string()); // clear the string stream
+		ms_building b2 = b1; // copy contructor
+		sstr << b2;
+
+		BOOST_REQUIRE(sstr.str() == check.str());
+		BOOST_REQUIRE(b2.getSpacePtrs().size() == 2);
+		BOOST_REQUIRE(b1.getSDefMethodDominant() == checksDef);
+	}
+	
+	BOOST_AUTO_TEST_CASE( non_valid_initialization_1 )
+	{
+		BOOST_REQUIRE_THROW(ms_building b1("spatial_design/wrong_ms_test_1.txt"), std::invalid_argument);
+	}
+	BOOST_AUTO_TEST_CASE( non_valid_initialization_5 )
+	{
+		BOOST_REQUIRE_THROW(ms_building b5("spatial_design/wrong_ms_test_2.txt"), std::invalid_argument);
+	}
+	BOOST_AUTO_TEST_CASE( non_valid_initialization_7 )
+	{
+		BOOST_REQUIRE_THROW(ms_building b7("spatial_design/wrong_ms_test_3.txt"), std::invalid_argument);
+	}
+	
 
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -96,13 +174,16 @@ BOOST_AUTO_TEST_SUITE( building_functions )
 		BOOST_REQUIRE_THROW(s1 == b1.getSpacePtr(s2), std::runtime_error);
 	}
 	
-		BOOST_AUTO_TEST_CASE( getSpacePtr_2 )
+	BOOST_AUTO_TEST_CASE( getSpacePtr_2 )
 	{
 		ms_building b1;
 		
-		ms_space s1(1,{0,0,0},{1000,2000,3000});
-		ms_space s2(2,{1000,0,0},{3000,3000,3000});
-		ms_space s3(3,{0,0,4303},{3000,3000,3000});
+		Eigen::Vector3d coord1(0,0,0), coord2(1000,0,0), coord3(0,0,4303);
+		Eigen::Vector3d dim1(1000,2000,3000), dim2(3000,3000,3000), dim3(3000,3000,3000);
+		
+		ms_space s1(1,coord1,dim1);
+		ms_space s2(2,coord2,dim2);
+		ms_space s3(3,coord3,dim3);
 		
 		std::vector<ms_space*> testPtrs;
 		testPtrs.push_back(&s1);
@@ -135,10 +216,27 @@ BOOST_AUTO_TEST_SUITE( building_functions )
 	{
 		ms_building b1;
 		BOOST_REQUIRE(b1.getLastSpaceID() == 0);
-		b1.addSpace(ms_space(1,{0,0,0},{1000,1000,1000}));
+		Eigen::Vector3d coord1(0,0,0), coord2(0,0,3000);
+		Eigen::Vector3d dim1(1000,1000,1000);
+		b1.addSpace(ms_space(1,coord1,dim1));
 		BOOST_REQUIRE(b1.getLastSpaceID() == 1);
-		b1.addSpace(ms_space(131,{0,0,3000},{1000,1000,1000}));
+		b1.addSpace(ms_space(131,coord2,dim1));
 		BOOST_REQUIRE(b1.getLastSpaceID() == 131);
+	}
+	
+	BOOST_AUTO_TEST_CASE( getinsertFileName )
+	{
+		ms_building b1("spatial_design/ms_test_1.txt");
+		std::string textfileName = "spatial_design/ms_test_1.txt";
+		BOOST_REQUIRE(b1.getInsertFileName() == textfileName);
+	}
+	
+	BOOST_AUTO_TEST_CASE( getSDefMethodDominant )
+	{
+		ms_building b1("spatial_design/ms_test_1.txt");
+		std::string textfileName = "spatial_design/ms_test_1.txt";
+		std::string sDefMethodDominant = "R";
+		BOOST_REQUIRE(b1.getSDefMethodDominant() == sDefMethodDominant);
 	}
 	
 	BOOST_AUTO_TEST_CASE( getVolume )
@@ -176,8 +274,11 @@ BOOST_AUTO_TEST_SUITE( building_functions )
 		ms_building b1;
 		ms_building b2("spatial_design/ms_test_3.txt");
 		
-		b1.addSpace(ms_space(1,{0,0,0},{3000,3000,3000}));
-		b1.addSpace(ms_space(2,{0,0,4303},{3000,3000,3000}));
+		Eigen::Vector3d coord1(0,0,0), coord2(0,0,4303);
+		Eigen::Vector3d dim1(3000,3000,3000);
+		
+		b1.addSpace(ms_space(1,coord1,dim1));
+		b1.addSpace(ms_space(2,coord2,dim1));
 
 		BOOST_REQUIRE(b1 != b2);
 		BOOST_REQUIRE(b2 != b1);
@@ -193,9 +294,12 @@ BOOST_AUTO_TEST_SUITE( building_functions )
 		ms_building b1("spatial_design/ms_test_1.txt");
 		ms_building b2;
 		
-		ms_space s1(1,{0,0,0},{1000,2000,3000});
-		ms_space s2(2,{1000,0,0},{3000,3000,3000});
-		ms_space s3(3,{0,0,4303},{3000,3000,3000});
+		Eigen::Vector3d coord1(0,0,0), coord2(1000,0,0), coord3(0,0,4303);
+		Eigen::Vector3d dim1(1000,2000,3000), dim2(3000,3000,3000), dim3(3000,3000,3000);
+		
+		ms_space s1(1,coord1,dim1);
+		ms_space s2(2,coord2,dim2);
+		ms_space s3(3,coord3,dim3);
 		
 		b2.addSpace(s1);
 		b2.addSpace(s2);
@@ -293,36 +397,36 @@ BOOST_AUTO_TEST_SUITE( building_functions )
 	{
 		std::multimap<ms_space*, ms_space*> overlaps;
 		ms_building ms1;
-		ms1.addSpace(ms_space("1,1000,1000,1000,0,0,0"));
-		ms1.addSpace(ms_space("2,2000,2000,2000,-500,-500,-500"));
+		ms1.addSpace(ms_space("R,1,1000,1000,1000,0,0,0"));
+		ms1.addSpace(ms_space("R,2,2000,2000,2000,-500,-500,-500"));
 		BOOST_REQUIRE(ms1.hasOverlappingSpaces(overlaps));
 		BOOST_REQUIRE(overlaps.size() == 1);
 
 		overlaps.clear();
 		ms_building ms2;
-		ms2.addSpace(ms_space("1,1000,1000,3000,0,0,-1000"));
-		ms2.addSpace(ms_space("2,2000,2000,2000,-500,-500,-500"));
+		ms2.addSpace(ms_space("R,1,1000,1000,3000,0,0,-1000"));
+		ms2.addSpace(ms_space("R,2,2000,2000,2000,-500,-500,-500"));
 		BOOST_REQUIRE(ms2.hasOverlappingSpaces(overlaps));
 		BOOST_REQUIRE(overlaps.size() == 1);
 		
 		overlaps.clear();
 		ms_building ms3;
-		ms3.addSpace(ms_space("1,1000,1000,1000,0,0,0"));
-		ms3.addSpace(ms_space("2,1000,1000,1000,500,500,0"));
+		ms3.addSpace(ms_space("R,1,1000,1000,1000,0,0,0"));
+		ms3.addSpace(ms_space("R,2,1000,1000,1000,500,500,0"));
 		BOOST_REQUIRE(ms3.hasOverlappingSpaces(overlaps));
 		BOOST_REQUIRE(overlaps.size() == 2);
 		
 		overlaps.clear();
 		ms_building ms4;
-		ms4.addSpace(ms_space("1,1000,1000,1000,0,0,500"));
-		ms4.addSpace(ms_space("2,1000,1000,1000,500,500,0"));
+		ms4.addSpace(ms_space("R,1,1000,1000,1000,0,0,500"));
+		ms4.addSpace(ms_space("R,2,1000,1000,1000,500,500,0"));
 		BOOST_REQUIRE(ms4.hasOverlappingSpaces(overlaps));
 		BOOST_REQUIRE(overlaps.size() == 2);
 		
 		overlaps.clear();
 		ms_building ms5;
-		ms5.addSpace(ms_space("1,1000,1000,1000,0,0,1000"));
-		ms5.addSpace(ms_space("2,1000,1000,1000,500,500,0"));
+		ms5.addSpace(ms_space("R,1,1000,1000,1000,0,0,1000"));
+		ms5.addSpace(ms_space("R,2,1000,1000,1000,500,500,0"));
 		BOOST_REQUIRE(!ms5.hasOverlappingSpaces(overlaps));
 		BOOST_REQUIRE(overlaps.size() == 0);
 	}
@@ -331,32 +435,32 @@ BOOST_AUTO_TEST_SUITE( building_functions )
 	{
 		std::vector<ms_space*> floatingSpaces;
 		ms_building ms1;
-		ms1.addSpace(ms_space("1,1000,1000,1000,0,0,0"));
-		ms1.addSpace(ms_space("2,1000,1000,1000,0,0,1500"));
+		ms1.addSpace(ms_space("R,1,1000,1000,1000,0,0,0"));
+		ms1.addSpace(ms_space("R,2,1000,1000,1000,0,0,1500"));
 		BOOST_REQUIRE(ms1.hasFloatingSpaces(floatingSpaces));
 
 		floatingSpaces.clear();
 		ms_building ms2;
-		ms2.addSpace(ms_space("1,1000,1000,1000,0,0,0"));
-		ms2.addSpace(ms_space("2,1000,1000,1000,1000,1000,1000"));
+		ms2.addSpace(ms_space("R,1,1000,1000,1000,0,0,0"));
+		ms2.addSpace(ms_space("R,2,1000,1000,1000,1000,1000,1000"));
 		BOOST_REQUIRE(!ms2.hasFloatingSpaces(floatingSpaces));
 		
 		floatingSpaces.clear();
 		ms_building ms3;
-		ms3.addSpace(ms_space("1,1000,1000,1000,0,0,0"));
-		ms3.addSpace(ms_space("2,1000,1000,1000,1000,0,1000"));
+		ms3.addSpace(ms_space("R,1,1000,1000,1000,0,0,0"));
+		ms3.addSpace(ms_space("R,2,1000,1000,1000,1000,0,1000"));
 		BOOST_REQUIRE(!ms3.hasFloatingSpaces(floatingSpaces));
 		
 		floatingSpaces.clear();
 		ms_building ms4;
-		ms4.addSpace(ms_space("1,1000,1000,1000,0,0,0"));
-		ms4.addSpace(ms_space("2,1000,1000,1000,1000,500,500"));
+		ms4.addSpace(ms_space("R,1,1000,1000,1000,0,0,0"));
+		ms4.addSpace(ms_space("R,2,1000,1000,1000,1000,500,500"));
 		BOOST_REQUIRE(!ms4.hasFloatingSpaces(floatingSpaces));
 		
 		floatingSpaces.clear();
 		ms_building ms5;
-		ms5.addSpace(ms_space("1,1000,1000,1000,0,0,0"));
-		ms5.addSpace(ms_space("2,1000,1000,1000,0,0,1000"));
+		ms5.addSpace(ms_space("R,1,1000,1000,1000,0,0,0"));
+		ms5.addSpace(ms_space("R,2,1000,1000,1000,0,0,1000"));
 		BOOST_REQUIRE(!ms5.hasFloatingSpaces(floatingSpaces));
 	}
 	

@@ -41,10 +41,12 @@ namespace bso { namespace utilities { namespace geometry {
 			vector v1 = {mVertices[i]-mVertices[0]};
 			vector v2 = {mVertices[i+1]-mVertices[0]};
 			vector v3 = {mVertices[i+2]-mVertices[0]};
+
 			if (v3.isZero(tol) || v2.isZero(tol) || v1.isZero(tol)) continue;
 			vector v1x2 = v1.cross(v2);
 			vector v1x3 = v1.cross(v3);
-			if (!v1x2.isParallel(v1x3,tol))
+
+			if (!v1x2.isParallel(v1x3 ,tol))
 			{
 				allVerticesOnOneplane = false;
 				break;
@@ -68,6 +70,7 @@ namespace bso { namespace utilities { namespace geometry {
 
 	polyhedron::polyhedron()
 	{ //
+		//std::cout << "polyhedron::polyhedron() is working" << std::endl; //tessa defined
 		mSize = 0;
 		mSizeLines = 0;
 		mSizePolygons = 0;
@@ -76,11 +79,13 @@ namespace bso { namespace utilities { namespace geometry {
 	template <typename CONTAINER>
 	polyhedron::polyhedron(const CONTAINER& l, const double& tol /*= 1e-3*/)
 	{ // this also works as a copy constructor via the .begin() and .end() functions
+		//std::cout << "polyhedron::polyhedron(const CONTAINER& l, const double& tol /*= 1e-3*/) is working" << std::endl; //tessa defined
 		this->initFromVertices(l, tol);
 	} // ctor with arbitrary container of vertices
 
 	polyhedron::polyhedron(const std::initializer_list<vertex>&& l, const double& tol /*= 1e-3*/)
 	{ //
+		//std::cout << "polyhedron::polyhedron(const std::initializer_list<vertex>&& l, const double& tol /*= 1e-3*/) is working" << std::endl; //tessa defined
 		this->initFromVertices(l, tol);
 	} // ctor with initailizer list of vertices
 
