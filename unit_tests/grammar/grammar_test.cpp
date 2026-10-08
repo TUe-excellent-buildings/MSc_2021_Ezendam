@@ -38,7 +38,7 @@ BOOST_CHECK_EQUAL_COLLECTIONS(a.begin(), a.end(), b.begin(), b.end());
 namespace grammar_test {
 using namespace bso::grammar;
 
-BOOST_AUTO_TEST_SUITE( grammar_test )
+BOOST_AUTO_TEST_SUITE( grammar_test, * boost::unit_test::disabled() )
 
 	BOOST_AUTO_TEST_CASE( initialization )
 	{

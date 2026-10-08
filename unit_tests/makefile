@@ -1,8 +1,8 @@
 #libraries
 BOOST   = /usr/include/boost
 EIGEN   = /usr/include/eigen
-FADE	= /home/tessa/Libaries/fadeRelease_v1.93/fadeRelease_v1.93
-BSO     = /home/tessa/toolbox_NOBSD
+FADE	= /usr/include/Libaries/fadeRelease_v1.93/fadeRelease_v1.93
+BSO     = $(abspath ..)
 ALL_LIB = -I$(BOOST) -I$(EIGEN) -I$(BSO)
 
 #compiler settings

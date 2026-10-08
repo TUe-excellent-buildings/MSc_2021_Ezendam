@@ -1,7 +1,7 @@
 # Code used for complex non-orthogonal building handling; generating conformal geometry and applying it the the application of mesh generation
 This directory contains a part of the used code and data in the following publication:
 
-Ezendam, T., van der, Hofmeyer, H., van der Wal, S., Perevendieva K.G., and Emmerich, M. T. M. "Handling Complex Building Geometries for Disciplinary Processing in Conceptual Building Design Simulation and Optimization". In: Computing in Civil Engineering (2026). DOI: 10.1061/JCCEE5.CPENG-6922 
+Ezendam, T., Hofmeyer, H., van der Wal, S., Perevendieva K.G., and Emmerich, M. T. M. "Handling Complex Building Geometries for Disciplinary Processing in Conceptual Building Design Simulation and Optimization". In: Computing in Civil Engineering (2026). DOI: 10.1061/JCCEE5.CPENG-6922 
 
 A reference to the remaining used code for this publication can be found in the above mentioned publication. 
 
