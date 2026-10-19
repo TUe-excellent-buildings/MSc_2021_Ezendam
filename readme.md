@@ -1,15 +1,32 @@
-# README BSO toolbox
+# README MSc_2022_Van_der_Wal
 
 ## What is this repository for?
-   
-This repository contains a C++ library named the Building Spatial design Optimization toolbox (BSO toolbox).
+
+This repository contains a version of the C++ library **Building Spatial Design Optimization Toolbox (BSO Toolbox)**, developed to support building spatial design simulation and optimization.
+
+The latest version recommended for future development can be found at:
+ https://github.com/TUe-excellent-buildings/BSO-toolbox-V2/
+
+This repository contains a specific version of the toolbox that includes the **Iterative Partitioning Method**. This Iterative Partitioning Method was first presented and analysed in the MSc thesis of Ezendam:
+
+Ezendam, T. (2021). Two geometry conformal methods for the use in a multi-disciplinary non-orthogonal building spatial design optimisation framework [Master's thesis, Eindhoven University of Technology]
+
+Later on, the Iterative Partitioning Method was compared with two alternative methods, and the results were published in:
+
+Ezendam, T., Hofmeyer, H., van der Wal, S., Perevendieva, K.G., and Emmerich, M.T.M. (2026). Handling Complex Building Geometries for Disciplinary Processing in Conceptual Building Design Simulation and Optimization. In: Computing in Civil Engineering. DOI: 10.1061/JCCEE5.CPENG-6922.
+
+This repository contains all code and data used for the Iterative Partitioning Method presented in both the MSc thesis and the publication mentioned above. References to the code and data for the other two methods are provided in the publication above.
+
+## About the BSO Toolbox
+
+This repository contains a C++ library named the **Building Spatial design Optimization toolbox (BSO toolbox)**.
 In the first place, the toolbox has been developed to support building spatial design simulation and optimization by providing tools to:
 (i) represent and modify building spatial designs,
 (ii) generate discipline specific designs from a building spatial design,
 (iii) analyze structural designs,
 (iv) analyze the building physics of a building (i.e. thermal performance),
 (v) analyze data obtained from the evaluations, e.g. clustering and sorting algorithms.
-The toolbox itself does not contain any optimization methods, however, this repository will be extended with applications, and these will be related to optimization as well.
+The toolbox itself does not contain any optimization methods, however, this repository has been utilized as such as can be found in: toolbox/code_used_for_publications/hybridization_EA_and_SCDP.
 The toolbox relates to research in two joint projects by the Department of the Built Environment of Eindhoven University of Technology, and the Leiden Institute of Advanced Computer Science (LIACS), both in The Netherlands.
 Key publications within these research projects are given below. These publications provide a lot of background information on the purpose and setup of the code in this repository:
 * Ezendam, T.; Hofmeyer, H.; van der Wal, S.; Perevendieva K.G.; and Emmerich, M. T. M.: "Handling Complex Building Geometries for Disciplinary Processing in Conceptual Building Design Simulation and Optimization". Computing in Civil Engineering, 2026, DOI: 10.1061/JCCEE5.CPENG-6922
