@@ -15,7 +15,7 @@ Later on, the Iterative Partitioning Method was compared with two alternative me
 
 Ezendam, T., Hofmeyer, H., van der Wal, S., Perevendieva, K.G., and Emmerich, M.T.M. (2026). Handling Complex Building Geometries for Disciplinary Processing in Conceptual Building Design Simulation and Optimization. In: Computing in Civil Engineering. DOI: 10.1061/JCCEE5.CPENG-6922.
 
-This repository contains all code and data used for the Iterative Partitioning Method presented in both the MSc thesis and the publication mentioned above. References to the code and data for the other two methods are provided in the publication above.
+This repository contains all code and data (MSc_2021_Ezendam/code_used_for_publication) used for the Iterative Partitioning Method presented in both the MSc thesis and the publication mentioned above. References to the code and data for the other two methods are provided in the publication above.
 
 ## About the BSO Toolbox
 
@@ -205,7 +205,7 @@ If the clone was successful, the BSO toolbox is now cloned onto your local machi
 
 ##### 8. Compile and run the example.
 
-An example of how the toolbox can be used has been added to the repository as well (`../BSO-toolbox/example`).
+An example of how the toolbox can be used has been added to the repository as well (`../MSc_2021_Ezendam/example`).
 The source code of the example is as follows:
 
 ```cpp
@@ -273,13 +273,13 @@ For instance, check if the line `BOOST = /usr/include/boost` is correctly linkin
 The example can then be compiled by typing the following command in the terminal:
 
 ```bash
-$ make clean all
+$ make cls clean all
 ```
 
 Run the example by typing the following command in the terminal:
 
 ```bash
-$ ./example
+$ ./main
 ```
 
 The output should then look as follows.
@@ -299,7 +299,7 @@ The unit tests are also included in the repository, and in case of developing/co
 Depending on the location of the repository on your local machine, moving to the unit test directory may be achieved as follows.
 
 ```bash
-$ cd /usr/include/BSO-toolbox/unit_tests
+$ cd /usr/include/MSc_2021_Ezendam/unit_tests
 ```
 
 The unit test directory contains a makefile with which the unit tests can be compiled.
@@ -308,7 +308,7 @@ For instance, check if the line `BOOST = /usr/include/boost` is correctly linkin
 
 To run all tests of the BSO toolbox, make sure the directory mentioned above is the working directory of your terminal and type in the terminal:
 ```bash
-$ make clean cls all
+$ make cls clean all
 ./all_test
 ```
 
@@ -347,7 +347,7 @@ Alternatively, also sub-parts of the toolbox can be tested. This can be achieved
 
 For example to test the geometry package of the toolbox type the following in the terminal:
 ```bash
-$ make clean cls geometry
+$ make cls clean geometry
 $ ./geometry_test
 ```
 
