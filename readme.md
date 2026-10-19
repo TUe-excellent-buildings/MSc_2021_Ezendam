@@ -198,10 +198,10 @@ $ git clone <link>
 The command line on the terminal should then look similar to the line below.
 
 ```bash
-$ git clone https://github.com/TUe-excellent-buildings/BSO-toolbox.git
+$ git clone https://github.com/TUe-excellent-buildings/MSc_2021_EZendam.git
 ```
 
-If the clone was successful, the BSO toolbox is now cloned onto your local machine, e.g. in the directory: `/usr/include/BSO-toolbox`.
+If the clone was successful, the BSO toolbox is now cloned onto your local machine, e.g. in the directory: `/usr/include/MSc_2021_EZendam`.
 
 ##### 8. Compile and run the example.
 
@@ -380,7 +380,7 @@ Parts of the code that are used in the BSO toolbox are based on codes that are o
 This section is used to clarify which parts of code in the BSO toolbox are based on other codes, and refers to the original work.
 
 #### Method of Moving Asymptotes
-The MMA.hpp and MMA.cpp files in the directiory `../BSO-toolbox/bso/structural_design/topology_optimization` are the translation of the MMA-code written in MATLAB by Krister Svanberg.
+The MMA.hpp and MMA.cpp files in the directiory `../MSc_2021_EZendam/bso/structural_design/topology_optimization` are the translation of the MMA-code written in MATLAB by Krister Svanberg.
 The original work can be downloaded from http://www.smoptit.se/ under de GNU General Public License.
 The user should refer to the academic work of Krister Svanberg when work will be published in which this code is used.
 For a description of the original work see this [paper] (https://onlinelibrary.wiley.com/doi/abs/10.1002/nme.1620240207).
