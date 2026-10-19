@@ -1,4 +1,4 @@
-# README MSc_2022_Van_der_Wal
+# README MSc_2021_Ezendam
 
 ## What is this repository for?
 
